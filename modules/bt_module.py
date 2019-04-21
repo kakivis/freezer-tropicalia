@@ -1,39 +1,36 @@
-import bluetooth
+from bluetooth import *
 
+server_sock = BluetoothSocket(RFCOMM)
+server_sock.bind(("", PORT_ANY))
+server_sock.listen(1)
 
-def receiveMessages():
-    server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+port = server_sock.getsockname()[1]
 
-    port = 1
-    server_sock.bind(("", port))
-    server_sock.listen(1)
+uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
 
-    client_sock, address = server_sock.accept()
-    print "Accepted connection from " + str(address)
+advertise_service(server_sock, "SampleServer",
+	service_id=uuid,
+	service_classes=[uuid, SERIAL_PORT_CLASS],
+	profiles=[SERIAL_PORT_PROFILE],
+	# protocols = [ OBEX_UUID ]
+)
 
-    data = client_sock.recv(1024)
-    print "received [%s]" % data
+print("Waiting for connection on RFCOMM channel %d" % port)
 
-    client_sock.close()
-    server_sock.close()
+client_sock, client_info = server_sock.accept()
+print("Accepted connection from ", client_info)
 
+try:
+	while True:
+		data = client_sock.recv(1024)
+		if len(data) == 0:
+			break
+		print("received [%s]" % data)
+except IOError:
+	pass
 
-def sendMessageTo(targetBluetoothMacAddress):
-    port = 1
-    sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-    sock.connect((targetBluetoothMacAddress, port))
-    sock.send("hello!!")
-    sock.close()
+print("disconnected")
 
-
-def lookUpNearbyBluetoothDevices():
-    nearby_devices = bluetooth.discover_devices()
-    if not nearby_devices:
-        print "Couldn't find any device"
-    for bdaddr in nearby_devices:
-        print str(bluetooth.lookup_name(bdaddr)) + " [" + str(bdaddr) + "]"
-
-
-lookUpNearbyBluetoothDevices()
-print "Receiving messages"
-receiveMessages()
+client_sock.close()
+server_sock.close()
+print("all done")
