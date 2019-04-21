@@ -28,6 +28,8 @@ def sendMessageTo(targetBluetoothMacAddress):
 
 def lookUpNearbyBluetoothDevices():
     nearby_devices = bluetooth.discover_devices()
+    if not nearby_devices:
+        print "Couldn't find any device"
     for bdaddr in nearby_devices:
         print str(bluetooth.lookup_name(bdaddr)) + " [" + str(bdaddr) + "]"
         if str(bluetooth.lookup_name(bdaddr)) == "kaks":
@@ -35,4 +37,5 @@ def lookUpNearbyBluetoothDevices():
 
 
 lookUpNearbyBluetoothDevices()
-
+print "Receiving messages"
+receiveMessages()
