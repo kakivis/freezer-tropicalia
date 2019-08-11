@@ -91,7 +91,7 @@ class Application(dbus.service.Object):
 		self.services.append(service)
 
 	@dbus.service.method(DBUS_OM_IFACE, out_signature='a{oa{sa{sv}}}')
-	def get_managed_objects(self):
+	def GetManagedObjects(self):
 		response = {}
 		for service in self.services:
 			response[service.get_path()] = service.get_properties()
@@ -117,7 +117,7 @@ class TropicaliaAdvertisement(Advertisement):
 
 def find_adapter(bus):
 	remote_om = dbus.Interface(bus.get_object(BLUEZ_SERVICE_NAME, '/'), DBUS_OM_IFACE)
-	objects = remote_om.get_managed_objects()
+	objects = remote_om.GetManagedObjects()
 	for o, props in objects.items():
 		for iface in (LE_ADVERTISING_MANAGER_IFACE, GATT_MANAGER_IFACE):
 			if iface not in props:
