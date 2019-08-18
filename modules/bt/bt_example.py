@@ -154,7 +154,7 @@ def main():
 	try:
 		mainloop.run()
 	except KeyboardInterrupt:
-		adv.Release()
+		adv.release()
 
 
 if __name__ == '__main__':
