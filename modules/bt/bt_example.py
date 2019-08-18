@@ -100,7 +100,9 @@ def main():
 	service_manager = dbus.Interface(
 		bus.get_object(BLUEZ_SERVICE_NAME, adapter),
 		GATT_MANAGER_IFACE)
-	ad_manager = dbus.Interface(bus.get_object(BLUEZ_SERVICE_NAME, adapter), LE_ADVERTISING_MANAGER_IFACE)
+	ad_manager = dbus.Interface(
+		bus.get_object(BLUEZ_SERVICE_NAME, adapter),
+		LE_ADVERTISING_MANAGER_IFACE)
 
 	app = TropicaliaApplication(bus)
 	adv = TropicaliaAdvertisement(bus, 0)
