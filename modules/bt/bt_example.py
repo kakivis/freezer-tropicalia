@@ -3,10 +3,6 @@ import dbus, dbus.mainloop.glib
 from gi.repository import GObject
 from bluetooth_driver import *
 
-BLUEZ_SERVICE_NAME = 'org.bluez'
-DBUS_OM_IFACE = 'org.freedesktop.DBus.ObjectManager'
-LE_ADVERTISING_MANAGER_IFACE = 'org.bluez.LEAdvertisingManager1'
-GATT_MANAGER_IFACE = 'org.bluez.GattManager1'
 GATT_CHRC_IFACE = 'org.bluez.GattCharacteristic1'
 TROPICALIA_SERVICE_UUID = '12345678-1234-5678-1234-56789abcdef0'
 TEST_CHARACTERISTIC_UUID = '12345678-1234-5678-1234-56789abcdef1'
@@ -25,11 +21,11 @@ class TestCharacteristic(Characteristic):
 			service)
 		self.value = []
 
-	def read_value(self, options):
+	def ReadValue(self, options):
 		print('TestCharacteristic Read: ' + repr(self.value))
 		return self.value
 
-	def write_value(self, value, options):
+	def WriteValue(self, value, options):
 		print('TestCharacteristic Write: ' + repr(value))
 		self.value = value
 
@@ -43,11 +39,11 @@ class TestEncryptCharacteristic(Characteristic):
 			service)
 		self.value = []
 
-	def read_value(self, options):
+	def ReadValue(self, options):
 		print('TestEncryptCharacteristic Read: ' + repr(self.value))
 		return self.value
 
-	def write_value(self, value, options):
+	def WriteValue(self, value, options):
 		print('TestEncryptCharacteristic Write: ' + repr(value))
 		self.value = value
 
@@ -61,11 +57,11 @@ class TestSecureCharacteristic(Characteristic):
 			service)
 		self.value = []
 
-	def read_value(self, options):
+	def ReadValue(self, options):
 		print('TestSecureCharacteristic Read: ' + repr(self.value))
 		return self.value
 
-	def write_value(self, value, options):
+	def WriteValue(self, value, options):
 		print('TestSecureCharacteristic Write: ' + repr(value))
 		self.value = value
 
@@ -76,29 +72,6 @@ class TropicaliaService(Service):
 		self.add_characteristic(TestCharacteristic(bus, 0, self))
 		self.add_characteristic(TestEncryptCharacteristic(bus, 1, self))
 		self.add_characteristic(TestSecureCharacteristic(bus, 2, self))
-
-
-class Application(dbus.service.Object):
-	def __init__(self, bus):
-		self.path = '/'
-		self.services = []
-		dbus.service.Object.__init__(self, bus, self.path)
-
-	def get_path(self):
-		return dbus.ObjectPath(self.path)
-
-	def add_service(self, service):
-		self.services.append(service)
-
-	@dbus.service.method(DBUS_OM_IFACE, out_signature='a{oa{sa{sv}}}')
-	def GetManagedObjects(self):
-		response = {}
-		for service in self.services:
-			response[service.get_path()] = service.get_properties()
-			chrcs = service.get_characteristics()
-			for chrc in chrcs:
-				response[chrc.get_path()] = chrc.get_properties()
-		return response
 
 
 class TropicaliaApplication(Application):
@@ -113,17 +86,6 @@ class TropicaliaAdvertisement(Advertisement):
 		self.add_service_uuid(TROPICALIA_SERVICE_UUID)
 		self.add_local_name(LOCAL_NAME)
 		self.include_tx_power = True
-
-
-def find_adapter(bus):
-	remote_om = dbus.Interface(bus.get_object(BLUEZ_SERVICE_NAME, '/'), DBUS_OM_IFACE)
-	objects = remote_om.GetManagedObjects()
-	for o, props in objects.items():
-		for iface in (LE_ADVERTISING_MANAGER_IFACE, GATT_MANAGER_IFACE):
-			if iface not in props:
-				continue
-		return o
-	return None
 
 
 def main():
@@ -154,7 +116,7 @@ def main():
 	try:
 		mainloop.run()
 	except KeyboardInterrupt:
-		adv.release()
+		adv.Release()
 
 
 if __name__ == '__main__':
