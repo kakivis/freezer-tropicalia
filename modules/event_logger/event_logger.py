@@ -1,33 +1,43 @@
 import os
 from datetime import datetime
 from event import *
+import json
+
 
 class EventLogger:
 	def __init__(self, file_name):
 		self.file_name = file_name
-		self.event_id = None
+		self.event_id = self.get_last_event_id()
 
-# todo
 	def add_entry(self, lunches, user_id):
 		timestamp = str(datetime.now())
+		events = self.get_events_from_file()
+		new_event = Event(self.event_id+1, timestamp, user_id, lunches)
+		events.append(new_event.__dict__)
 
-# todo
+
 	def get_current_event_id(self):
-#		if self.event_id is None:
-
+		return self.event_id
 
 # todo
 	def get_last_event_id(self):
+		if os.path.exists(self.file_name):
+			events = self.get_events_from_file()
+			last_event = events[-1]
+			return last_event["id"]
+		else:
+			return 0
+
+	def get_events_from_file(self):
 		file = open(self.file_name, "r")
-		last_line = file.readlines()[-1]
+		contents = file.read()
+		events = json.loads(contents)["events"]
 		file.close()
-		return self.json_decode(last_line).id
+		return events
 
-
-# todo
-	def json_decode(self, line):
-		event_id = None
-		timestamp = None
-		user_id = None
-		lunches = None
-		return Event(event_id, timestamp, user_id, lunches)
+	def save_event_log(self, events):
+		if os.path.exists(self.file_name):
+			os.remove(self.file_name)
+		file = open(self.file_name, 'w+')
+		json.dump(events, file)
+		file.close()
