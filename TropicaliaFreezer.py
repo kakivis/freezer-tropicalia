@@ -1,7 +1,6 @@
-#from modules.bt.bluetooth_driver import *
-from modules.cryptography.AsymmetricCryptography import AsymmetricCryptography
-from modules.door_locks.door_lock import DoorLock
-from modules.event_logger.event_logger import EventLogger
+from modules.cryptography.Crypt import AsymmetricCryptography
+from modules.door_locks.DoorLock import DoorLock
+from modules.event_logger.EventLogger import EventLogger
 
 
 class TropicaliaFreezer:

@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 import sys
-from load_cell import LoadCell
+from LoadCell import LoadCell
 
 
 cell_1 = LoadCell(5, 6)

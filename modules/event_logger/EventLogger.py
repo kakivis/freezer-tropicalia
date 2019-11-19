@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from event import *
+from Event import *
 import json
 
 

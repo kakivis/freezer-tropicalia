@@ -1,7 +1,7 @@
 import sys
 import dbus, dbus.mainloop.glib
 from gi.repository import GObject
-from bluetooth_driver import *
+from BluetoothDriver import *
 
 GATT_CHRC_IFACE = 'org.bluez.GattCharacteristic1'
 TROPICALIA_SERVICE_UUID = '12345678-1234-5678-1234-56789abcdef0'

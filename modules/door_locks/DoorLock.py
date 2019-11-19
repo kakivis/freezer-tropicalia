@@ -1,4 +1,4 @@
-from servo import *
+from Servo import *
 
 LOCK_ANGLE = 90
 UNLOCK_ANGLE = 0
