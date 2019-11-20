@@ -1,4 +1,4 @@
-from door_locks.DoorLock import DoorLock
+from Lock.DoorLock import DoorLock
 
 PIN_INSIDE_LOCK = 15   # Place Holder
 PIN_OUTSIDE_LOCK = 16  # Place Holder

@@ -1,6 +1,6 @@
-from modules.cryptography.Crypt import AsymmetricCryptography
-from modules.door_locks.DoorLock import DoorLock
-from modules.event_logger.EventLogger import EventLogger
+from Modules.Cryptography.Crypt import AsymmetricCryptography
+from Modules.Lock.DoorLock import DoorLock
+from Modules.EventLogger.EventLogger import EventLogger
 
 
 class TropicaliaFreezer:

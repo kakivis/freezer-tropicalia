@@ -65,7 +65,7 @@ def decrypt_message(encoded_encrypted_msg, private_key):
 
 
 if __name__ == '__main__':
-	a_message = "This is the illustration of RSA algorithm of asymmetric cryptography"
+	a_message = "This is the illustration of RSA algorithm of asymmetric Cryptography"
 	crypt = AsymmetricCryptography()
 	a_public_key = crypt.generate_public_key('public_key.pem')
 	an_encrypted_msg = crypt.encrypt_message(a_message, a_public_key)

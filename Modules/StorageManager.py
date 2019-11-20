@@ -1,4 +1,4 @@
-from modules.load_cell.LoadCell import LoadCell
+from Modules.LoadCell.LoadCell import LoadCell
 
 A_IN = 5
 A_OUT = 6
