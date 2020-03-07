@@ -26,7 +26,7 @@ class TestCharacteristic(Characteristic):
 		return self.value
 
 	def WriteValue(self, value, options):
-		print('TestCharacteristic Write: '.join([str(v) for v in self.value]))
+		print('TestCharacteristic Write: '.join([str(v) for v in value]))
 		self.value = value
 
 
