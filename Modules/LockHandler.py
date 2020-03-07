@@ -4,7 +4,7 @@ PIN_INSIDE_LOCK = 15   # Place Holder
 PIN_OUTSIDE_LOCK = 16  # Place Holder
 
 
-class LockManager:
+class LockHandler:
 	def __init__(self):
 		self.inside_lock = DoorLock(PIN_INSIDE_LOCK)
 		self.outside_lock = DoorLock(PIN_OUTSIDE_LOCK)
@@ -17,4 +17,3 @@ class LockManager:
 		self.inside_lock.lock()
 		self.outside_lock.lock()
 
-	# TODO Verify if we can actually lock the freezer due to its "door" positioning
