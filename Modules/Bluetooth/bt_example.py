@@ -22,11 +22,11 @@ class TestCharacteristic(Characteristic):
 		self.value = []
 
 	def ReadValue(self, options):
-		print('TestCharacteristic Read: ' + repr(self.value))
+		print('TestCharacteristic Read: '.join([str(v) for v in self.value]))
 		return self.value
 
 	def WriteValue(self, value, options):
-		print('TestCharacteristic Write: ' + repr(value))
+		print('TestCharacteristic Write: '.join([str(v) for v in self.value]))
 		self.value = value
 
 
