@@ -6,8 +6,7 @@ from BluetoothDriver import *
 GATT_CHRC_IFACE = 'org.bluez.GattCharacteristic1'
 TROPICALIA_SERVICE_UUID = '12345678-1234-5678-1234-56789abcdef0'
 TEST_CHARACTERISTIC_UUID = '12345678-1234-5678-1234-56789abcdef1'
-TEST_ENCRYPT_CHARACTERISTIC_UUID = '12345678-1234-5678-1234-56789abcdef2'
-TEST_SECURE_CHARACTERISTIC_UUID = '12345678-1234-5678-1234-56789abcdef3'
+TEST_SECURE_CHARACTERISTIC_UUID = '12345678-1234-5678-1234-56789abcdef2'
 LOCAL_NAME = 'TropilaciaFreezer'
 mainloop = None
 
@@ -22,29 +21,11 @@ class TestCharacteristic(Characteristic):
 		self.value = []
 
 	def ReadValue(self, options):
-		print('TestCharacteristic Read: '.join([str(v) for v in self.value]))
+		print('TestCharacteristic Read: ' + ''.join([str(v) for v in self.value]))
 		return self.value
 
 	def WriteValue(self, value, options):
-		print('TestCharacteristic Write: '.join([str(v) for v in value]))
-		self.value = value
-
-
-class TestEncryptCharacteristic(Characteristic):
-	def __init__(self, bus, index, service):
-		Characteristic.__init__(
-			self, bus, index,
-			TEST_ENCRYPT_CHARACTERISTIC_UUID,
-			['encrypt-read', 'encrypt-write'],
-			service)
-		self.value = []
-
-	def ReadValue(self, options):
-		print('TestEncryptCharacteristic Read: ' + repr(self.value))
-		return self.value
-
-	def WriteValue(self, value, options):
-		print('TestEncryptCharacteristic Write: ' + repr(value))
+		print('TestCharacteristic Write: ' + ''.join([str(v) for v in value]))
 		self.value = value
 
 
@@ -58,11 +39,11 @@ class TestSecureCharacteristic(Characteristic):
 		self.value = []
 
 	def ReadValue(self, options):
-		print('TestSecureCharacteristic Read: ' + repr(self.value))
+		print('TestSecureCharacteristic Read: ' + ''.join([str(v) for v in self.value]))
 		return self.value
 
 	def WriteValue(self, value, options):
-		print('TestSecureCharacteristic Write: ' + repr(value))
+		print('TestSecureCharacteristic Write: ' + ''.join([str(v) for v in value]))
 		self.value = value
 
 
@@ -70,8 +51,7 @@ class TropicaliaService(Service):
 	def __init__(self, bus, index):
 		Service.__init__(self, bus, index, TROPICALIA_SERVICE_UUID, True)
 		self.add_characteristic(TestCharacteristic(bus, 0, self))
-		self.add_characteristic(TestEncryptCharacteristic(bus, 1, self))
-		self.add_characteristic(TestSecureCharacteristic(bus, 2, self))
+		self.add_characteristic(TestSecureCharacteristic(bus, 1, self))
 
 
 class TropicaliaApplication(Application):
