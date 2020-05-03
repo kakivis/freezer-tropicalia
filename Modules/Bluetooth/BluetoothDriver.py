@@ -290,6 +290,9 @@ class Application(dbus.service.Object):
     def add_service(self, service):
         self.services.append(service)
 
+    def get_services(self):
+        return self.services
+
     @dbus.service.method(DBUS_OM_IFACE, out_signature='a{oa{sa{sv}}}')
     def GetManagedObjects(self):
         response = {}
