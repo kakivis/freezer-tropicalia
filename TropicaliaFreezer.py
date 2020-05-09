@@ -93,7 +93,7 @@ class TropicaliaFreezer:
 			error_handler=register_ad_error_cb)
 
 	def handle_instruction(self, instruction):
-		instructions = ['consult_stock, get_last_events, unlock_freezer, lock_freezer', 'test_cryptography']
+		instructions = ['consult_stock', 'get_last_events', 'unlock_freezer', 'lock_freezer', 'test_cryptography']
 		if instruction not in instructions:
 			print 'There is no such instruction, please check the whitelisted instructions.'
 			return
