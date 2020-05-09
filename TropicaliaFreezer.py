@@ -16,6 +16,52 @@ CHARACTERISTIC_UUID = '12345678-1234-5678-1234-56789abcdef1'
 LOCAL_NAME = 'TropilaciaFreezer'
 
 
+class TropicaliaCharacteristic(Characteristic):
+	def __init__(self, bus, index, service):
+		Characteristic.__init__(
+			self, bus, index,
+			CHARACTERISTIC_UUID,
+			['secure-read', 'secure-write'],
+			service)
+		self.value = []
+
+	@staticmethod
+	def parse_instruction_bytes(value):
+		return ''.join([str(v) for v in value])
+
+	def ReadValue(self, options):
+		print('ReadValue: ' + self.parse_intruction_bytes(self.value))
+		return self.value
+
+	def WriteValue(self, value, options):
+		print('WriteValue b4: ' + ''.join([str(v) for v in self.value]))
+		instruction = self.parse_intruction_bytes(value)
+		tropicalia_freezer.handle_instruction(instruction)
+		print('WriteValue after: ' + instruction)
+
+		self.value = value
+
+
+class TropicaliaService(Service):
+	def __init__(self, bus, index):
+		Service.__init__(self, bus, index, TROPICALIA_SERVICE_UUID, True)
+		self.add_characteristic(TropicaliaCharacteristic(bus, 0, self))
+
+
+class TropicaliaApplication(Application):
+	def __init__(self, bus):
+		Application.__init__(self, bus)
+		self.add_service(TropicaliaService(bus, 0))
+
+
+class TropicaliaAdvertisement(Advertisement):
+	def __init__(self, bus, index):
+		Advertisement.__init__(self, bus, index, 'peripheral')
+		self.add_service_uuid(TROPICALIA_SERVICE_UUID)
+		self.add_local_name(LOCAL_NAME)
+		self.include_tx_power = True
+
+
 class TropicaliaFreezer:
 	def __init__(self):
 		GPIO.setmode(GPIO.BCM)
@@ -99,49 +145,3 @@ if __name__ == '__main__':
 		tropicalia_freezer.mainloop.run()
 	except KeyboardInterrupt:
 		tropicalia_freezer.adv.Release()
-
-
-class TropicaliaCharacteristic(Characteristic):
-	def __init__(self, bus, index, service):
-		Characteristic.__init__(
-			self, bus, index,
-			CHARACTERISTIC_UUID,
-			['secure-read', 'secure-write'],
-			service)
-		self.value = []
-
-	@staticmethod
-	def parse_instruction_bytes(value):
-		return ''.join([str(v) for v in value])
-
-	def ReadValue(self, options):
-		print('ReadValue: ' + self.parse_intruction_bytes(self.value))
-		return self.value
-
-	def WriteValue(self, value, options):
-		print('WriteValue b4: ' + ''.join([str(v) for v in self.value]))
-		instruction = self.parse_intruction_bytes(value)
-		tropicalia_freezer.handle_instruction(instruction)
-		print('WriteValue after: ' + instruction)
-
-		self.value = value
-
-
-class TropicaliaService(Service):
-	def __init__(self, bus, index):
-		Service.__init__(self, bus, index, TROPICALIA_SERVICE_UUID, True)
-		self.add_characteristic(TropicaliaCharacteristic(bus, 0, self))
-
-
-class TropicaliaApplication(Application):
-	def __init__(self, bus):
-		Application.__init__(self, bus)
-		self.add_service(TropicaliaService(bus, 0))
-
-
-class TropicaliaAdvertisement(Advertisement):
-	def __init__(self, bus, index):
-		Advertisement.__init__(self, bus, index, 'peripheral')
-		self.add_service_uuid(TROPICALIA_SERVICE_UUID)
-		self.add_local_name(LOCAL_NAME)
-		self.include_tx_power = True
