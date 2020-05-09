@@ -108,7 +108,7 @@ class TropicaliaFreezer:
 		events_as_string = json.dumps(events)
 		print events_as_string
 		services = self.app.get_services()
-		print "found services:" + services
+		print "found services"
 		service = services[0]
 		characteristic = service.get_characteristics()[0]
 		print "found characteristic with value = " + characteristic.value
