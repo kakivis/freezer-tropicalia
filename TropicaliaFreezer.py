@@ -35,7 +35,7 @@ class TropicaliaCharacteristic(Characteristic):
 
 	def WriteValue(self, value, options):
 		print('WriteValue b4: ' + ''.join([str(v) for v in self.value]))
-		instruction = self.parse_intruction_bytes(value)
+		instruction = self.parse_instruction_bytes(value)
 		tropicalia_freezer.handle_instruction(instruction)
 		print('WriteValue after: ' + instruction)
 
