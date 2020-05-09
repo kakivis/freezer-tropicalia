@@ -8,6 +8,7 @@ from Modules.StorageManager import StorageManager
 from Modules.Bluetooth.BluetoothDriver import *
 from datetime import date
 from gi.repository import GObject
+import RPi.GPIO as GPIO
 
 GATT_CHRC_IFACE = 'org.bluez.GattCharacteristic1'
 TROPICALIA_SERVICE_UUID = '12345678-1234-5678-1234-56789abcdef0'
@@ -17,8 +18,9 @@ LOCAL_NAME = 'TropilaciaFreezer'
 
 class TropicaliaFreezer:
 	def __init__(self):
+		GPIO.setmode(GPIO.BCM)
 		self.crypt = AsymmetricCryptography()
-		self.lock_handler = DoorLock(23)
+		self.lock_handler = DoorLock(16)
 		self.storage_handler = StorageManager()
 		self.event_logger = EventLogger('log_' + date.today().strftime("%d_%m_%y"))
 		self.app = None

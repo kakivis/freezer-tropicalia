@@ -6,7 +6,6 @@ class Servo:
     def __init__(self, out):
         # initialize
         GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BOARD)
         GPIO.setup(out, GPIO.OUT)
         self.pin = out
         self.pwm = GPIO.PWM(out, 50)  # setup frequency
