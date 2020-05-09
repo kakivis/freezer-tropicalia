@@ -84,6 +84,15 @@ class TropicaliaFreezer:
 
 if __name__ == '__main__':
 	tropicalia_freezer = TropicaliaFreezer()
+	# initialize log with full storage
+	tropicalia_freezer.event_logger.add_entry([8, 8, 8, 8], 00)
+	storage = tropicalia_freezer.event_logger.get_storage_state()
+	storage[3] -= 1
+	tropicalia_freezer.event_logger.add_entry(storage, 32)
+	storage[1] -= 2
+	tropicalia_freezer.event_logger.add_entry(storage, 2)
+	storage[0] -= 3
+	tropicalia_freezer.event_logger.add_entry(storage, 5)
 	try:
 		tropicalia_freezer.mainloop.run()
 	except KeyboardInterrupt:
@@ -108,9 +117,10 @@ class TropicaliaCharacteristic(Characteristic):
 		return self.value
 
 	def WriteValue(self, value, options):
-		print('WriteValue b4: ' + ''.join([str(v) for v in value]))
-
-		print('WriteValue after: ' + ''.join([str(v) for v in value]))
+		print('WriteValue b4: ' + ''.join([str(v) for v in self.value]))
+		instruction = self.parse_intruction_bytes(value)
+		tropicalia_freezer.handle_instruction(instruction)
+		print('WriteValue after: ' + instruction)
 
 		self.value = value
 
