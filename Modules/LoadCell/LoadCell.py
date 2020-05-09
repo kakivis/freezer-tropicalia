@@ -11,8 +11,6 @@ class LoadCell:
 		self.OFFSET = 0
 		self.SCALE = 1
 
-		GPIO.setmode(GPIO.BCM)
-
 		self.PD_SCK = pd_sck
 		self.DOUT = dout
 

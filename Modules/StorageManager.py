@@ -1,4 +1,5 @@
 from Modules.LoadCell.LoadCell import LoadCell
+import RPi.GPIO as GPIO
 
 A_IN = 5
 A_OUT = 6
@@ -12,6 +13,7 @@ D_OUT = 12  # check that pin
 
 class StorageManager:
 	def __init__(self):
+		GPIO.setmode(GPIO.BCM)
 		self.stack_a = LoadCell(A_OUT, A_IN)
 		self.stack_b = LoadCell(B_OUT, B_IN)
 		self.stack_c = LoadCell(C_OUT, C_IN)
