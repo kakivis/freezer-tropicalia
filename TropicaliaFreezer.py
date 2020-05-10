@@ -106,12 +106,12 @@ class TropicaliaFreezer:
 	def get_last_events(self):
 		events = self.event_logger.get_events_from_file()
 		events_as_string = json.dumps(events)
-		print events_as_string
 		services = self.app.get_services()
-		print "found services"
-		print self.app.GetManagedObjects()
-		# characteristic = service.get_characteristics()[0]
-		# print "found characteristic with value = " + characteristic.value
+		print "found services" + str(len(services))
+		service = services[-1]
+		print service.get_properties()
+		characteristic = service.get_characteristics()[-1]
+		print "found characteristic with value = " + characteristic.value
 		# characteristic.value = bytes(events_as_string, 'utf8')
 
 	def unlock_freezer(self):
