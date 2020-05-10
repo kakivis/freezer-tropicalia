@@ -106,32 +106,35 @@ class TropicaliaFreezer:
 		events = self.event_logger.get_events_from_file()
 		events_as_string = json.dumps(events)
 		services = self.app.get_services()
-		print "found services " + str(len(services))
 		service = services[-1]
-		print service.get_properties()
 		characteristics = service.get_characteristics()
-		print "found characteristics " + str(len(characteristics))
 		characteristic = characteristics[-1]
 		characteristic.value = bytearray(events_as_string, 'utf8')
 
 	def unlock_freezer(self):
 		# self.lock_handler.unlock()
-		service = self.app.get_services()[0]
-		characteristic = service.get_characteristics()[0]
-		characteristic.value = bytes('Unlocked', 'utf8')
+		services = self.app.get_services()
+		service = services[-1]
+		characteristics = service.get_characteristics()
+		characteristic = characteristics[-1]
+		characteristic.value = bytearray('Unlocked', 'utf8')
 
 	def lock_freezer(self):
 		# self.lock_handler.lock()
-		service = self.app.get_services()[0]
-		characteristic = service.get_characteristics()[0]
-		characteristic.value = bytes('Locked', 'utf8')
+		services = self.app.get_services()
+		service = services[-1]
+		characteristics = service.get_characteristics()
+		characteristic = characteristics[-1]
+		characteristic.value = bytearray('Locked', 'utf8')
 
 	def test_cryptography(self):
 		a_public_key = self.crypt.generate_public_key('public_key.pem')
 		an_encrypted_msg = self.crypt.encrypt_message('TEST ENCRYPTED MESSAGE weeeeeeee', a_public_key)
-		service = self.app.get_services()[0]
-		characteristic = service.get_characteristics()[0]
-		characteristic.value = bytes(an_encrypted_msg, 'utf8')
+		services = self.app.get_services()
+		service = services[-1]
+		characteristics = service.get_characteristics()
+		characteristic = characteristics[-1]
+		characteristic.value = bytearray(an_encrypted_msg, 'utf8')
 
 
 if __name__ == '__main__':
