@@ -26,16 +26,17 @@ class TropicaliaCharacteristic(Characteristic):
 		self.value = []
 
 	@staticmethod
-	def parse_instruction_bytes(value):
+	def parse_bytes(value):
 		return ''.join([str(v) for v in value])
 
 	def ReadValue(self, options):
-		print('ReadValue: ' + self.parse_instruction_bytes(self.value))
+		value_as_string = self.parse_bytes(self.value)
+		print('ReadValue: ' + value_as_string)
 		return self.value
 
 	def WriteValue(self, value, options):
-		print('WriteValue b4: ' + ''.join([str(v) for v in self.value]))
-		instruction = self.parse_instruction_bytes(value)
+		instruction = self.parse_bytes(value)
+		print('WriteValue b4: ' + instruction)
 		tropicalia_freezer.handle_instruction(instruction)
 		print('WriteValue after: ' + ''.join([str(v) for v in self.value]))
 
