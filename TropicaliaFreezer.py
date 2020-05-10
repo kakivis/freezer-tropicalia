@@ -113,7 +113,7 @@ class TropicaliaFreezer:
 		characteristics = service.get_characteristics()
 		print "found characteristics " + str(len(characteristics))
 		characteristic = characteristics[-1]
-		characteristic.value = bytes(events_as_string, 'utf8')
+		characteristic.value = bytearray(events_as_string, 'utf8')
 
 	def unlock_freezer(self):
 		# self.lock_handler.unlock()
