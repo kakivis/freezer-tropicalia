@@ -110,7 +110,8 @@ class TropicaliaFreezer:
 		print "found services" + str(len(services))
 		service = services[-1]
 		print service.get_properties()
-		characteristic = service.get_characteristics()[-1]
+		characteristics = service.get_characteristics()
+		characteristic = characteristics[-1]
 		print "found characteristic with value = " + characteristic.value
 		# characteristic.value = bytes(events_as_string, 'utf8')
 
