@@ -30,7 +30,7 @@ class TropicaliaCharacteristic(Characteristic):
 		return ''.join([str(v) for v in value])
 
 	def ReadValue(self, options):
-		print('ReadValue: ' + self.parse_intruction_bytes(self.value))
+		print('ReadValue: ' + self.parse_instruction_bytes(self.value))
 		return self.value
 
 	def WriteValue(self, value, options):
