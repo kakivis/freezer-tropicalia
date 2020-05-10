@@ -39,8 +39,6 @@ class TropicaliaCharacteristic(Characteristic):
 		tropicalia_freezer.handle_instruction(instruction)
 		print('WriteValue after: ' + ''.join([str(v) for v in self.value]))
 
-		self.value = value
-
 
 class TropicaliaService(Service):
 	def __init__(self, bus, index):
