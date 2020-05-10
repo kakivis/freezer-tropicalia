@@ -37,7 +37,7 @@ class TropicaliaCharacteristic(Characteristic):
 		print('WriteValue b4: ' + ''.join([str(v) for v in self.value]))
 		instruction = self.parse_instruction_bytes(value)
 		tropicalia_freezer.handle_instruction(instruction)
-		print('WriteValue after: ' + instruction)
+		print('WriteValue after: ' + ''.join([str(v) for v in self.value]))
 
 		self.value = value
 
@@ -113,8 +113,7 @@ class TropicaliaFreezer:
 		characteristics = service.get_characteristics()
 		print "found characteristics " + str(len(characteristics))
 		characteristic = characteristics[-1]
-		print "found characteristic with value = " + characteristic.value
-		# characteristic.value = bytes(events_as_string, 'utf8')
+		characteristic.value = bytes(events_as_string, 'utf8')
 
 	def unlock_freezer(self):
 		# self.lock_handler.unlock()
