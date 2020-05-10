@@ -107,10 +107,11 @@ class TropicaliaFreezer:
 		events = self.event_logger.get_events_from_file()
 		events_as_string = json.dumps(events)
 		services = self.app.get_services()
-		print "found services" + str(len(services))
+		print "found services " + str(len(services))
 		service = services[-1]
 		print service.get_properties()
 		characteristics = service.get_characteristics()
+		print "found characteristics " + str(len(characteristics))
 		characteristic = characteristics[-1]
 		print "found characteristic with value = " + characteristic.value
 		# characteristic.value = bytes(events_as_string, 'utf8')
