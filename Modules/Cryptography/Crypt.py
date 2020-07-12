@@ -26,7 +26,11 @@ class AsymmetricCryptography:
 
 	def generate_public_key(self, public_key_file_name):
 		if os.path.exists(public_key_file_name):
-			exit("ERROR 02 - PROVIDED PUBLIC KEY FILE NAME ALREADY EXISTS")
+			file = open(public_key_file_name, 'r')
+			key_str = file.read()
+			public_key = RSA.importKey(key_str)
+			file.close()
+			return public_key
 		file = open(public_key_file_name, 'w+')
 		public_key = self.private_key.publickey()
 		file.write(public_key.exportKey())
@@ -43,25 +47,6 @@ class AsymmetricCryptography:
 		decoded_encrypted_msg = base64.b64decode(encoded_encrypted_msg)
 		decoded_decrypted_msg = self.private_key.decrypt(decoded_encrypted_msg)
 		return decoded_decrypted_msg
-
-# def generate_keys():
-# 	# key length must be a multiple of 256 and >= 1024
-# 	modulus_length = 256*4
-# 	private_key = RSA.generate(modulus_length, Random.new().read)
-# 	public_key = private_key.publickey()
-# 	return private_key, public_key
-
-
-def encrypt_message(message, public_key):
-	encrypted_msg = public_key.encrypt(message, 32)[0]
-	encoded_encrypted_msg = base64.b64encode(encrypted_msg)
-	return encoded_encrypted_msg
-
-
-def decrypt_message(encoded_encrypted_msg, private_key):
-	decoded_encrypted_msg = base64.b64decode(encoded_encrypted_msg)
-	decoded_decrypted_msg = private_key.decrypt(decoded_encrypted_msg)
-	return decoded_decrypted_msg
 
 
 if __name__ == '__main__':

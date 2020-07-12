@@ -12,15 +12,15 @@ import RPi.GPIO as GPIO
 
 GATT_CHRC_IFACE = 'org.bluez.GattCharacteristic1'
 TROPICALIA_SERVICE_UUID = '12345678-1234-5678-1234-56789abcdef0'
-CHARACTERISTIC_UUID = '12345678-1234-5678-1234-56789abcdef1'
-LOCAL_NAME = 'TropilaciaFreezer'
+TROPICALIA_CHARACTERISTIC_UUID = '12345678-1234-5678-1234-56789abcdef1'
+TROPICALIA_SERVICE_NAME = 'TropilaciaFreezer'
 
 
 class TropicaliaCharacteristic(Characteristic):
 	def __init__(self, bus, index, service):
 		Characteristic.__init__(
 			self, bus, index,
-			CHARACTERISTIC_UUID,
+			TROPICALIA_CHARACTERISTIC_UUID,
 			['secure-read', 'secure-write'],
 			service)
 		self.value = []
@@ -57,7 +57,7 @@ class TropicaliaAdvertisement(Advertisement):
 	def __init__(self, bus, index):
 		Advertisement.__init__(self, bus, index, 'peripheral')
 		self.add_service_uuid(TROPICALIA_SERVICE_UUID)
-		self.add_local_name(LOCAL_NAME)
+		self.add_local_name(TROPICALIA_SERVICE_NAME)
 		self.include_tx_power = True
 
 
