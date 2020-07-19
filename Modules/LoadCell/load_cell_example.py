@@ -5,6 +5,7 @@ from LoadCell import LoadCell
 
 DOUT_BCM = 4
 PD_SCK_BCM = 18
+GPIO.setmode(GPIO.BCM)
 cell_1 = LoadCell(DOUT_BCM, PD_SCK_BCM)
 
 
@@ -16,7 +17,6 @@ def clean_and_exit():
 
 
 def setup():
-    GPIO.setmode(GPIO.BCM)
     # cell_1.set_offset(8449282.59375)
     # cell_1.set_scale(182.18)
     # cell_1.tare()
