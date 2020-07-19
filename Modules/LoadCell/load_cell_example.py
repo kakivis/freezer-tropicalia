@@ -26,11 +26,11 @@ def setup():
 def loop():
 
     try:
-        val = cell_1.read_average(32)
-        print "{}\n".format(val)
+        val = cell_1.read_average(8)
+        print "{}".format(val)
 
         cell_1.power_down()
-        time.sleep(2)
+        time.sleep(1)
         cell_1.power_up()
 
         # time.sleep(2)
