@@ -3,8 +3,9 @@ import time
 import sys
 from LoadCell import LoadCell
 
-
-cell_1 = LoadCell(5, 6)
+DOUT_BCM = 4
+PD_SCK_BCM = 18
+cell_1 = LoadCell(DOUT_BCM, PD_SCK_BCM)
 
 
 def clean_and_exit():
@@ -15,8 +16,9 @@ def clean_and_exit():
 
 
 def setup():
-    cell_1.set_offset(8449282.59375)
-    cell_1.set_scale(182.18)
+    GPIO.setmode(GPIO.BCM)
+    # cell_1.set_offset(8449282.59375)
+    # cell_1.set_scale(182.18)
     # cell_1.tare()
     pass
 
@@ -24,15 +26,15 @@ def setup():
 def loop():
 
     try:
-        val = cell_1.get_grams(32)
-        print "{} lunch(es) weighing {}g\n".format(int(round(val/400)), val)
+        val = cell_1.read_average(32)
+        print "{}\n".format(val)
 
         cell_1.power_down()
-        time.sleep(.001)
+        time.sleep(2)
         cell_1.power_up()
 
         # time.sleep(2)
-        raw_input("press enter to measure again\n")
+        # raw_input("press enter to measure again\n")
     except (KeyboardInterrupt, SystemExit):
         clean_and_exit()
 

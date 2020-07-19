@@ -30,4 +30,10 @@ class StorageManager:
 		self.stack_c.tare()
 		self.stack_d.tare()
 
-# TODO autocalibration ?
+## Trabalhar com a diferença de marmitas:
+# Será feito um teste realizando diversas medidas para chegar em um valor médio da diferença na leitura quando tirada uma marmita
+# Apos isso, o controle do estoque será feito realizando a leitura antes de abrir o freezer e outra depois, e vendo qual a diferença de leitura
+# Assim, não usaremos a balança para medir o peso real da pilha de marmitas, e sim para calcular a diferença de peso entre as leituras
+# Sofrendo um menor erro acumulado
+# terá que ser repensado e reescrito boa parte do código da balança
+# também será adicionada uma referencia ao log de eventos dentro do StorageManager
